@@ -180,6 +180,9 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 .data-actions{display:flex;gap:10px;flex-wrap:wrap;align-items:center}
 
 .note{font-size:12px;color:var(--text3);margin-top:10px;line-height:1.6}
+.ver-pill{font-size:11px;font-family:var(--fm);font-weight:600;color:var(--text2);background:var(--bg2);border:1.5px solid var(--border2);border-radius:20px;padding:4px 11px;white-space:nowrap}
+.ver-card{border-color:var(--border2)}
+.ver-big{font-family:var(--fm);font-size:22px;font-weight:700;color:var(--navy);background:var(--bg2);border:2px solid var(--border2);border-radius:var(--r);padding:12px 18px;display:inline-block;letter-spacing:.5px}
 .toast{position:fixed;bottom:20px;right:20px;background:var(--navy);color:#fff;font-size:14px;font-weight:600;padding:10px 20px;border-radius:20px;opacity:0;pointer-events:none;transition:opacity .2s;z-index:999}
 .toast.show{opacity:1}
 .empty{font-size:14px;color:var(--text3);padding:16px 4px}
@@ -196,7 +199,7 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 <div id="login-screen">
   <div class="login-card">
     <div class="login-logo">⛳ Crackerz Golf Tournament<span class="login-dot"></span></div>
-    <div class="login-sub">2026/27 Season — sign in to update your availability</div>
+    <div class="login-sub">2026/27 Season — sign in to update your availability <span class="ver-pill" id="verPillLogin" style="margin-left:4px"></span></div>
     <div class="login-field">
       <label>Who are you?</label>
       <select id="login-player"><option value="">Select your name…</option></select>
@@ -215,6 +218,7 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 <div id="app-shell">
 <header>
   <div class="logo">⛳ Crackerz Golf Tournament<span class="logo-dot"></span></div>
+  <span class="ver-pill" id="verPill"></span>
   <div class="sub">2026/27 Season</div>
   <div class="sync-status offline" id="syncStatus"><span class="sync-dot"></span><span id="syncLabel">Not connected</span></div>
   <div class="tab-bar">
@@ -308,6 +312,12 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 
   <!-- ============ SETUP PANEL ============ -->
   <div class="panel" id="panel-setup">
+    <div class="card ver-card">
+      <h3>App version</h3>
+      <p style="margin-bottom:10px">Check this against the version you deployed to confirm the latest build is actually live.</p>
+      <div class="ver-big" id="verBig">—</div>
+      <p class="note" id="verBuilt"></p>
+    </div>
     <div class="sync-setup">
       <h3>Google Sheets sync</h3>
       <p>Paste your Apps Script Web App URL to enable automatic cloud sync between everyone's browser and the shared Sheet.</p>
@@ -346,6 +356,17 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 <div class="toast" id="toast"></div>
 
 <script>
+/* ===== version ===== */
+// Bump this every time the file changes so you can confirm at a glance
+// which build is actually live after deploying.
+const APP_VERSION = 'v2026.09.13-a';
+const APP_BUILT   = '13 September 2026';
+document.getElementById('verPill').textContent = APP_VERSION;
+document.getElementById('verPillLogin').textContent = APP_VERSION;
+document.getElementById('verBig').textContent = APP_VERSION;
+document.getElementById('verBuilt').textContent = 'Built ' + APP_BUILT + ' — includes rotating byes, server-side merge sync, and score validation.';
+document.title = 'Crackerz Golf Tournament ' + APP_VERSION;
+
 const players = ["Harin Wijenayake","Sid Shekar","Mithila Wakista","Sumeet Balgovind","Janik Soysa"];
 const courses = ["Churchill","Tirhatuan","Morack","Freeway","Yarra Bend","Waterford Valley","Yarrambat","Yarra Valley","Kingston"];
 const SEASON_SPLIT = new Date(2027,0,4); // Round 1 / Round 2 divide — first Sunday of Jan
