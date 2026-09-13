@@ -40,7 +40,7 @@ body{font-family:var(--fb);background:var(--bg);color:var(--text);font-size:15px
 /* ===== APP SHELL ===== */
 #app-shell{display:none}
 #app-shell.active{display:block}
-header{background:var(--surface);border-bottom:2px solid var(--border2);padding:12px 20px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;flex-wrap:wrap;box-shadow:0 2px 12px rgba(26,39,68,.08)}
+header{background:var(--surface);border-bottom:2px solid var(--border2);padding:12px 10px;display:flex;align-items:center;gap:12px;position:sticky;top:0;z-index:200;flex-wrap:wrap;box-shadow:0 2px 12px rgba(26,39,68,.08)}
 .logo{font-family:var(--fm);font-size:16px;font-weight:700;color:var(--navy);display:flex;align-items:center;gap:8px}
 .logo-dot{width:8px;height:8px;border-radius:50%;background:var(--gold)}
 .sub{font-size:12px;color:var(--text3);font-family:var(--fm);padding-left:12px;border-left:1.5px solid var(--border)}
@@ -58,7 +58,7 @@ header{background:var(--surface);border-bottom:2px solid var(--border2);padding:
 .switch-btn{font-size:12px;font-weight:600;color:var(--text3);background:none;border:1.5px solid var(--border);border-radius:20px;padding:5px 12px;cursor:pointer;font-family:var(--fb)}
 .switch-btn:hover{border-color:var(--border2);color:var(--text)}
 
-main{max-width:1240px;margin:0 auto;padding:20px 16px 60px}
+main{max-width:1240px;margin:0 auto;padding:20px 8px 60px}
 .panel{display:none}
 .panel.active{display:block}
 
@@ -77,21 +77,20 @@ main{max-width:1240px;margin:0 auto;padding:20px 16px 60px}
 .submit-count.full{background:var(--green-bg);border-color:var(--green);color:var(--green)}
 
 .grid-wrap{overflow-x:auto;border-radius:var(--rl);border:2px solid var(--border2);background:var(--surface);margin-bottom:16px}
-table.ag{border-collapse:collapse;width:100%;min-width:1700px}
-.ag thead th{background:var(--navy);color:#fff;padding:8px 4px;font-size:12px;font-weight:600;white-space:nowrap;text-align:center;border-bottom:2px solid var(--navy2);position:sticky;top:0;z-index:3}
-.ag thead th.ph{text-align:left;min-width:170px;position:sticky;left:0;z-index:4;background:var(--navy);padding-left:16px;font-size:14px}
-.ag thead th .mo{display:block;font-size:10px;letter-spacing:.6px;text-transform:uppercase;color:rgba(255,255,255,.6);font-weight:700}
-.ag thead th .dt{display:block;font-family:var(--fm);font-size:13px;color:#fff;margin-top:2px}
-.ag tbody tr td{border-bottom:1px solid var(--border);padding:5px 4px;text-align:center;vertical-align:middle}
+table.ag{border-collapse:collapse;width:100%;min-width:640px}
+.ag thead th{background:var(--navy);color:#fff;padding:10px 8px;font-size:12px;font-weight:600;text-align:center;border-bottom:2px solid var(--navy2);position:sticky;top:0;z-index:3}
+.ag thead th.ph{text-align:left;min-width:190px;padding-left:16px;font-size:13px}
+.ag thead th.pcol{min-width:120px}
+.ag thead th.pavail{min-width:90px}
+.hdr-pname{display:block;font-family:var(--fm);font-weight:700;font-size:13px;margin-bottom:4px}
+.hdr-badge{display:inline-block;font-size:9px;font-weight:700;font-family:var(--fm);padding:2px 7px;border-radius:20px;margin-bottom:4px}
+.hdr-badge.yes{background:rgba(255,255,255,.18);color:#6EE7A1}
+.hdr-badge.no{background:rgba(255,255,255,.18);color:#FCD34D}
+.hdr-tally{display:block;font-size:10px;color:rgba(255,255,255,.65);font-family:var(--fm);font-weight:600}
+.ag tbody tr td{border-bottom:1px solid var(--border);padding:7px 4px;text-align:center;vertical-align:middle}
 .ag tbody tr:last-child td{border-bottom:none}
 .ag tbody tr:hover td{background:#f7f8fa}
-.ag tbody tr td.pc{text-align:left;white-space:nowrap;position:sticky;left:0;background:var(--surface);z-index:1;padding-left:16px;padding-right:10px;border-right:2px solid var(--border2)}
-.ag tbody tr:hover td.pc{background:#f7f8fa}
-.pname-row{display:flex;align-items:center;gap:8px}
-.pname{font-weight:700;font-size:14px;color:var(--navy);font-family:var(--fm)}
-.sub-badge{font-size:10px;font-weight:700;font-family:var(--fm);padding:2px 7px;border-radius:20px;white-space:nowrap}
-.sub-badge.yes{background:var(--green-bg);color:var(--green)}
-.sub-badge.no{background:var(--amber-bg);color:var(--amber)}
+.ag tbody tr td.dcell{text-align:left;white-space:nowrap;padding-left:16px;font-family:var(--fb);font-weight:600;color:var(--navy);font-size:13px}
 .av-pill{display:inline-block;width:60px;padding:5px 0;border-radius:20px;font-size:11px;font-weight:700;font-family:var(--fm);border:1.5px solid var(--border);background:var(--bg2);color:var(--text3);cursor:pointer;transition:all .12s;user-select:none}
 .av-pill:hover{border-color:var(--border2)}
 .av-pill.avail{background:var(--green-bg);border-color:var(--green);color:var(--green)}
@@ -250,7 +249,6 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
       <table class="ag" id="avail-table">
         <thead><tr id="avail-head"></tr></thead>
         <tbody id="avail-body"></tbody>
-        <tfoot><tr class="tot" id="avail-tot"><td class="pc">Available</td></tr></tfoot>
       </table>
     </div>
 
@@ -361,6 +359,7 @@ function toast(msg, ms){
 
 /* ===== date helpers ===== */
 function localIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
+function isCleanDate(s){ return /^\d{4}-\d{2}-\d{2}$/.test(String(s||'')); }
 function getSundays(startAnchor, endDate){
   const d = new Date(startAnchor);
   while(d.getDay()!==0){ d.setDate(d.getDate()+1); }
@@ -386,9 +385,9 @@ function loadLocal(){
     const raw = localStorage.getItem('crackers_data');
     if(raw){
       const j = JSON.parse(raw);
-      availEntries = j.availEntries || [];
-      fixtureEntries = j.fixtureEntries || [];
-      resultEntries = j.resultEntries || [];
+      availEntries = (j.availEntries || []).filter(e=>isCleanDate(e.date));
+      fixtureEntries = (j.fixtureEntries || []).filter(e=>isCleanDate(e.date));
+      resultEntries = (j.resultEntries || []).filter(e=>isCleanDate(e.date));
     }
   }catch(e){}
 }
@@ -444,44 +443,59 @@ function isSubmitted(player){
 function pillLabel(s){ return s==='avail'?'IN':s==='out'?'OUT':'—'; }
 function nextState(s){ return s==='unset'?'avail':s==='avail'?'out':'unset'; }
 
-document.getElementById('avail-head').innerHTML = '<th class="ph">Player</th>' + sundays.map(d=>
-  `<th><span class="mo">${monthFmt.format(d)}</span><span class="dt">${dayFmt.format(d)}</span></th>`
-).join('');
+const fullDateFmt = new Intl.DateTimeFormat('en-AU',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+
+function tallyFor(p){
+  let inCount=0, outCount=0;
+  sundays.forEach(d=>{
+    const s = getAvailStatus(p, localIso(d));
+    if(s==='avail') inCount++; else if(s==='out') outCount++;
+  });
+  return {inCount, outCount};
+}
+
+function renderAvailHeader(){
+  const head = document.getElementById('avail-head');
+  const cols = players.map(p=>{
+    const sub = isSubmitted(p);
+    const {inCount,outCount} = tallyFor(p);
+    return `<th class="pcol">
+      <span class="hdr-pname">${p}</span>
+      <span class="hdr-badge ${sub?'yes':'no'}">${sub?'✓ Submitted':'Pending'}</span>
+      <span class="hdr-tally">${inCount} IN · ${outCount} OUT</span>
+    </th>`;
+  }).join('');
+  head.innerHTML = `<th class="ph">Date</th>${cols}<th class="pavail">Available</th>`;
+}
 
 function renderAvail(){
+  renderAvailHeader();
   const body = document.getElementById('avail-body');
-  body.innerHTML = players.map(p=>{
-    const mine = p===currentUser;
-    const sub = isSubmitted(p);
-    const cells = sundays.map(d=>{
-      const iso = localIso(d);
+  body.innerHTML = sundays.map(d=>{
+    const iso = localIso(d);
+    const cells = players.map(p=>{
+      const mine = p===currentUser;
       const s = getAvailStatus(p, iso);
       return `<td><span class="av-pill ${s} ${mine?'':'locked'}" data-p="${p}" data-d="${iso}">${pillLabel(s)}</span></td>`;
     }).join('');
-    return `<tr><td class="pc"><div class="pname-row"><span class="pname">${p}</span><span class="sub-badge ${sub?'yes':'no'}">${sub?'✓ Submitted':'Pending'}</span></div></td>${cells}</tr>`;
+    const n = availCountFor(iso);
+    return `<tr><td class="dcell">${fullDateFmt.format(d)}</td>${cells}<td class="tot-n ${n<4?'low':''}">${n}</td></tr>`;
   }).join('');
   body.querySelectorAll('.av-pill:not(.locked)').forEach(el=>{
     el.addEventListener('click',()=>{
       const p = el.dataset.p, d = el.dataset.d;
       setAvailStatus(p, d, nextState(getAvailStatus(p,d)));
-      renderAvail(); renderTotals(); renderSubmitCount(); renderFixtures();
+      renderAvail(); renderSubmitCount(); renderFixtures();
     });
   });
 }
 function availCountFor(dateIso){ return players.filter(p=>getAvailStatus(p,dateIso)==='avail').length; }
-function renderTotals(){
-  const row = document.getElementById('avail-tot');
-  const cells = sundays.map(d=>{
-    const n = availCountFor(localIso(d));
-    return `<td class="tot-n ${n<4?'low':''}">${n}</td>`;
-  }).join('');
-  row.innerHTML = `<td class="pc">Available</td>${cells}`;
-}
 function renderSubmitCount(){
   const n = players.filter(isSubmitted).length;
   const el = document.getElementById('submit-count');
   el.textContent = `${n} of ${players.length} submitted`;
   el.classList.toggle('full', n===players.length);
+
 }
 
 /* ===== fixtures ===== */
@@ -746,6 +760,9 @@ async function pullFromSheet(){
   }catch(e){ setSyncStatus('error','Pull failed'); toast('Could not reach Google Sheet'); }
 }
 function mergeIncoming(inAvail, inFixtures, inResults){
+  inAvail = (inAvail||[]).filter(e=>isCleanDate(e.date));
+  inFixtures = (inFixtures||[]).filter(e=>isCleanDate(e.date));
+  inResults = (inResults||[]).filter(e=>isCleanDate(e.date));
   function mergeArr(local, incoming, keyFn){
     const map = {};
     local.concat(incoming).forEach(e=>{
@@ -800,7 +817,7 @@ if(scriptUrl) document.getElementById('scriptUrl').value = scriptUrl;
 
 /* ===== render all + tabs ===== */
 function renderAll(){
-  renderAvail(); renderTotals(); renderSubmitCount();
+  renderAvail(); renderSubmitCount();
   renderFixtures();
   renderResultsMetrics(); renderResultsGrid();
 }
