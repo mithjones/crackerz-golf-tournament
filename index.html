@@ -347,7 +347,7 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 
 <script>
 const players = ["Harin Wijenayake","Sid Shekar","Mithila Wakista","Sumeet Balgovind","Janik Soysa"];
-const courses = ["Churchill","Tirhatuan","Morack","Freeway","Yarra Bend","Yarrambat","Yarra Valley","Kingston"];
+const courses = ["Churchill","Tirhatuan","Morack","Freeway","Yarra Bend","Waterford Valley","Yarrambat","Yarra Valley","Kingston"];
 const SEASON_SPLIT = new Date(2027,0,4); // Round 1 / Round 2 divide — first Sunday of Jan
 
 function toast(msg, ms){
@@ -360,6 +360,10 @@ function toast(msg, ms){
 /* ===== date helpers ===== */
 function localIso(d){ return d.getFullYear()+'-'+String(d.getMonth()+1).padStart(2,'0')+'-'+String(d.getDate()).padStart(2,'0'); }
 function isCleanDate(s){ return /^\d{4}-\d{2}-\d{2}$/.test(String(s||'')); }
+// Parse a stored "yyyy-mm-dd" as a LOCAL date. new Date('2026-09-20') is
+// parsed as UTC midnight, which renders as the previous day for anyone in a
+// timezone behind UTC.
+function parseIso(s){ const [y,m,d] = String(s).split('-').map(Number); return new Date(y, m-1, d); }
 function getSundays(startAnchor, endDate){
   const d = new Date(startAnchor);
   while(d.getDay()!==0){ d.setDate(d.getDate()+1); }
@@ -376,7 +380,11 @@ const fullFmt = new Intl.DateTimeFormat('en-AU',{day:'2-digit',month:'short',yea
 let availEntries = [];    // {player,date,status,ts}
 let fixtureEntries = [];  // {date,location,bookedBy,ts}
 let resultEntries = [];   // {date,course,player,score,ts}
-let scriptUrl = localStorage.getItem('crackers_script_url') || '';
+// Baked-in default so every player auto-connects to the shared Sheet without
+// needing to visit Setup. Setup can still override this per-browser if the
+// deployment URL ever changes.
+const DEFAULT_SCRIPT_URL = 'https://script.google.com/macros/s/AKfycbxlYhab-BLZaT-FCd1H-_fEoq2UEF-QQ1IlzDSSmCgnKE_-_QT6jGPGifJqBJ8gVkS-/exec';
+let scriptUrl = localStorage.getItem('crackers_script_url') || DEFAULT_SCRIPT_URL;
 let currentUser = localStorage.getItem('crackers_user') || null;
 let syncTimer = null;
 
@@ -508,15 +516,29 @@ function setFixtureOverride(dateIso, patch){
 
 function fixturesData(){
   let confirmedIdx = 0;
+  // Track byes given out so far this season so the fifth spot rotates fairly
+  // instead of always dropping whoever happens to be last in the players list.
+  const byesSoFar = {};
+  players.forEach(p=>byesSoFar[p]=0);
   return sundays.map(d=>{
     const iso = localIso(d);
     const availPlayers = players.filter(p=>getAvailStatus(p,iso)==='avail');
     const n = availPlayers.length;
-    let status, playing, note='';
+    let status, playing, note='', byePlayer='';
     if(n>=4){
       status='ok';
-      playing = availPlayers.slice(0,4);
-      if(n===5) note='5 available — trim to 4';
+      if(n>4){
+        // Give the bye to whoever has had the fewest byes so far
+        // (ties broken by fewest, then player order — fully deterministic).
+        byePlayer = availPlayers.slice().sort((a,b)=>
+          (byesSoFar[a]-byesSoFar[b]) || (players.indexOf(a)-players.indexOf(b))
+        )[0];
+        byesSoFar[byePlayer]++;
+        playing = availPlayers.filter(p=>p!==byePlayer);
+        note = byePlayer.split(' ')[0]+' on bye';
+      } else {
+        playing = availPlayers.slice();
+      }
     } else {
       status='short';
       playing = availPlayers;
@@ -529,7 +551,7 @@ function fixturesData(){
       confirmedIdx++;
     }
     const roundLabel = d < SEASON_SPLIT ? 'Round 1' : 'Round 2';
-    return {date:d, dateIso:iso, status, playing, note, location, bookedBy, roundLabel};
+    return {date:d, dateIso:iso, status, playing, note, byePlayer, location, bookedBy, roundLabel};
   });
 }
 
@@ -599,11 +621,18 @@ function scoreToPoints(scoresObj){
 function roundsFromEntries(){
   const byDate = {};
   resultEntries.forEach(e=>{
+    const v = Number(e.score);
+    // Ignore rows that aren't a usable score or aren't a known player —
+    // a NaN here would silently sort to the front and "win" the round.
+    if(!Number.isFinite(v)) return;
+    if(!players.includes(e.player)) return;
     if(!byDate[e.date]) byDate[e.date] = {date:e.date, course:e.course, scores:{}};
-    byDate[e.date].scores[e.player] = Number(e.score);
+    byDate[e.date].scores[e.player] = v;
     if(e.course) byDate[e.date].course = e.course;
   });
-  return Object.values(byDate).sort((a,b)=> a.date < b.date ? -1 : 1);
+  return Object.values(byDate)
+    .filter(r=>Object.keys(r.scores).length > 0)
+    .sort((a,b)=> a.date < b.date ? -1 : 1);
 }
 function saveRoundScores(dateIso, course, scores){
   resultEntries = resultEntries.filter(e=>e.date!==dateIso);
@@ -619,13 +648,22 @@ function computeStats(){
   roundsFromEntries().forEach(r=>{
     const pts = scoreToPoints(r.scores);
     const ranked = Object.entries(r.scores).sort((a,b)=>a[1]-b[1]);
-    ranked.forEach(([name],idx)=>{
-      if(!stats[name]) return;
-      stats[name].played++;
-      stats[name].pts += pts[name];
-      const slot = ['p1','p2','p3','p4'][idx];
-      if(slot) stats[name][slot]++;
-    });
+    // Standard competition ranking: tied players share the higher position
+    // (80,80,90,95 -> 1st, 1st, 3rd, 4th) so a shared win counts as a win.
+    let i = 0;
+    while(i < ranked.length){
+      let j = i;
+      while(j+1 < ranked.length && ranked[j+1][1] === ranked[i][1]) j++;
+      for(let k = i; k <= j; k++){
+        const name = ranked[k][0];
+        if(!stats[name]) continue;
+        stats[name].played++;
+        stats[name].pts += pts[name];
+        const slot = ['p1','p2','p3','p4'][i];   // position of the group, not the individual
+        if(slot) stats[name][slot]++;
+      }
+      i = j+1;
+    }
   });
   return stats;
 }
@@ -662,7 +700,7 @@ function renderResultsGrid(){
       if(r.scores[p]===undefined) return '<td class="rg-empty">—</td><td class="rg-empty">—</td>';
       return `<td>${r.scores[p]}</td><td class="rg-pts">${pts[p].toFixed(2)}</td>`;
     }).join('');
-    return `<tr><td class="rg-date">${fullFmt.format(new Date(r.date))}</td><td class="rg-course">${r.course||''}</td>${cells}</tr>`;
+    return `<tr><td class="rg-date">${fullFmt.format(parseIso(r.date))}</td><td class="rg-course">${r.course||''}</td>${cells}</tr>`;
   }).join('');
 
   const totLbl = '<tr class="rg-tot-lbl"><td class="rg-date">Total Points</td><td></td>' +
@@ -682,7 +720,7 @@ function renderResultsMetrics(){
     <div class="metric"><div class="ml">Season leader</div><div class="mv" style="font-size:18px">${stats[leader].pts>0?leader:'—'}</div><div class="ms">${stats[leader].pts.toFixed(2)} pts</div></div>
     <div class="metric"><div class="ml">Rounds logged</div><div class="mv">${rounds.length}</div><div class="ms">this season</div></div>
     <div class="metric"><div class="ml">Players</div><div class="mv">${players.length}</div><div class="ms">4 play per round</div></div>
-    <div class="metric"><div class="ml">Last round</div><div class="mv" style="font-size:18px">${last?last.course:'—'}</div><div class="ms">${last?fullFmt.format(new Date(last.date)):'No rounds yet'}</div></div>
+    <div class="metric"><div class="ml">Last round</div><div class="mv" style="font-size:18px">${last?last.course:'—'}</div><div class="ms">${last?fullFmt.format(parseIso(last.date)):'No rounds yet'}</div></div>
   `;
 }
 
@@ -703,23 +741,39 @@ function renderScoreRows(){
   wrap.innerHTML = playing.map(p=>`
     <div class="f-field sm">
       <label>${p.split(' ')[0]}</label>
-      <input type="number" class="score-input" data-player="${p}" placeholder="Strokes" min="50" max="120">
+      <input type="number" class="score-input" data-player="${p}" placeholder="Strokes" min="30" max="200" step="1">
     </div>
   `).join('');
 }
+const MIN_SCORE = 30, MAX_SCORE = 200;
 document.getElementById('save-scores-btn').addEventListener('click', ()=>{
   const picker = document.getElementById('fixture-picker');
   if(!picker.value){ toast('No fixture selected'); return; }
   const {location, dateIso} = JSON.parse(picker.value);
   const inputs = document.querySelectorAll('.score-input');
   const scores = {};
-  let ok = true;
+  const bad = [];
+  let blank = 0;
   inputs.forEach(inp=>{
-    const v = inp.value.trim();
-    if(!v){ ok=false; return; }
-    scores[inp.dataset.player] = Number(v);
+    const raw = inp.value.trim();
+    const who = inp.dataset.player.split(' ')[0];
+    if(!raw){ blank++; return; }               // blank = didn't play, that's allowed
+    const v = Number(raw);
+    if(!Number.isFinite(v) || !Number.isInteger(v) || v < MIN_SCORE || v > MAX_SCORE){
+      bad.push(who);
+      return;
+    }
+    scores[inp.dataset.player] = v;
   });
-  if(!ok || !Object.keys(scores).length){ toast('Enter all four scores first'); return; }
+  if(bad.length){
+    toast(`Check ${bad.join(', ')} — score must be a whole number between ${MIN_SCORE} and ${MAX_SCORE}`, 4000);
+    return;
+  }
+  const n = Object.keys(scores).length;
+  if(n < 2){ toast('Enter scores for at least 2 players', 3500); return; }
+  if(blank){
+    if(!confirm(`Only ${n} score${n===1?'':'s'} entered — save this round with ${n} player${n===1?'':'s'}?`)) return;
+  }
   saveRoundScores(dateIso, location, scores);
   toast('Scores saved');
   renderAll();
@@ -755,6 +809,7 @@ async function pullFromSheet(){
     persist(); renderAll();
     setSyncStatus('synced','Synced');
     toast('Pulled latest from Sheet');
+    syncToSheet(); // push straight back — catches anything that was only saved locally until now
   }catch(e){ setSyncStatus('error','Pull failed'); toast('Could not reach Google Sheet'); }
 }
 function mergeIncoming(inAvail, inFixtures, inResults){
