@@ -407,8 +407,6 @@ function enterApp(){
   if(scriptUrl) pullFromSheet();
 }
 
-if(currentUser){ enterApp(); }
-
 document.getElementById('login-btn').addEventListener('click', ()=>{
   const name = loginSelect.value;
   const pin = document.getElementById('login-pin').value;
@@ -831,7 +829,7 @@ document.querySelectorAll('.tab-btn').forEach(btn=>{
 });
 
 loadLocal();
-if(currentUser) renderAll();
+if(currentUser){ enterApp(); }
 if(scriptUrl) setSyncStatus('offline','Not synced yet');
 </script>
 </body>
