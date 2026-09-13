@@ -81,6 +81,24 @@ table.ag{border-collapse:collapse;width:100%;min-width:640px}
 .ag thead th{background:var(--navy);color:#fff;padding:10px 8px;font-size:12px;font-weight:600;text-align:center;border-bottom:2px solid var(--navy2);position:sticky;top:0;z-index:3}
 .ag thead th.ph{text-align:left;min-width:190px;padding-left:16px;font-size:13px}
 .ag thead th.pcol{min-width:120px}
+.ag thead th.pcol.mine{background:var(--navy3);box-shadow:inset 3px 0 0 var(--gold),inset -3px 0 0 var(--gold)}
+.you-tag{display:block;font-size:9px;font-weight:700;font-family:var(--fm);color:var(--gold);letter-spacing:1px;margin-bottom:2px}
+.ag tbody tr td.mine-cell{background:rgba(201,168,76,.07)}
+.ag tbody tr:hover td.mine-cell{background:rgba(201,168,76,.12)}
+.scroll-hint{display:none;font-size:12px;font-family:var(--fm);color:var(--amber);background:var(--amber-bg);border:1.5px solid #f3d488;border-radius:var(--r);padding:8px 12px;margin-bottom:10px;align-items:center;gap:8px}
+.scroll-hint button{background:var(--navy);color:#fff;border:none;border-radius:20px;padding:4px 12px;font-size:11px;font-weight:700;font-family:var(--fb);cursor:pointer;margin-left:auto;white-space:nowrap}
+@media(max-width:760px){
+  .scroll-hint{display:flex}
+  table.ag{min-width:0}
+  .ag thead th.ph{min-width:120px;font-size:12px;padding-left:10px}
+  .ag thead th.pcol{min-width:82px;font-size:11px;padding:8px 3px}
+  .ag thead th.pavail{min-width:54px;font-size:11px}
+  .hdr-pname{font-size:11px}
+  .hdr-tally{font-size:9px}
+  .hdr-badge{font-size:8px;padding:1px 5px}
+  .ag tbody tr td.dcell{font-size:11px;padding-left:10px}
+  .av-pill{width:52px;font-size:10px;padding:7px 0}
+}
 .ag thead th.pavail{min-width:90px}
 .hdr-pname{display:block;font-family:var(--fm);font-weight:700;font-size:13px;margin-bottom:4px}
 .hdr-badge{display:inline-block;font-size:9px;font-weight:700;font-family:var(--fm);padding:2px 7px;border-radius:20px;margin-bottom:4px}
@@ -249,6 +267,10 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
       <span class="submit-count" id="submit-count"></span>
     </div>
 
+    <div class="scroll-hint" id="scrollHint">
+      <span>Swipe the table sideways to reach your column.</span>
+      <button type="button" id="jumpMine">Jump to my column</button>
+    </div>
     <div class="grid-wrap">
       <table class="ag" id="avail-table">
         <thead><tr id="avail-head"></tr></thead>
@@ -359,12 +381,12 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 /* ===== version ===== */
 // Bump this every time the file changes so you can confirm at a glance
 // which build is actually live after deploying.
-const APP_VERSION = 'v2026.09.13-a';
+const APP_VERSION = 'v2026.09.13-b';
 const APP_BUILT   = '13 September 2026';
 document.getElementById('verPill').textContent = APP_VERSION;
 document.getElementById('verPillLogin').textContent = APP_VERSION;
 document.getElementById('verBig').textContent = APP_VERSION;
-document.getElementById('verBuilt').textContent = 'Built ' + APP_BUILT + ' — includes rotating byes, server-side merge sync, and score validation.';
+document.getElementById('verBuilt').textContent = 'Built ' + APP_BUILT + ' — includes mobile sync-on-close, own-column highlighting, rotating byes, and server-side merge sync.';
 document.title = 'Crackerz Golf Tournament ' + APP_VERSION;
 
 const players = ["Harin Wijenayake","Sid Shekar","Mithila Wakista","Sumeet Balgovind","Janik Soysa"];
@@ -471,6 +493,14 @@ function pillLabel(s){ return s==='avail'?'IN':s==='out'?'OUT':'—'; }
 function nextState(s){ return s==='unset'?'avail':s==='avail'?'out':'unset'; }
 
 const fullDateFmt = new Intl.DateTimeFormat('en-AU',{weekday:'long', day:'numeric', month:'long', year:'numeric'});
+const shortDateFmt = new Intl.DateTimeFormat('en-AU',{weekday:'short', day:'numeric', month:'short'});
+const isNarrow = () => {
+  try{
+    if(window.matchMedia) return window.matchMedia('(max-width:760px)').matches;
+  }catch(e){}
+  return (window.innerWidth || document.documentElement.clientWidth || 0) <= 760;
+};
+function dateLabel(d){ return isNarrow() ? shortDateFmt.format(d) : fullDateFmt.format(d); }
 
 function tallyFor(p){
   let inCount=0, outCount=0;
@@ -486,7 +516,8 @@ function renderAvailHeader(){
   const cols = players.map(p=>{
     const sub = isSubmitted(p);
     const {inCount,outCount} = tallyFor(p);
-    return `<th class="pcol">
+    const mine = p===currentUser;
+    return `<th class="pcol${mine?' mine':''}"${mine?' id="my-col"':''}>${mine?'<span class="you-tag">YOU</span>':''}
       <span class="hdr-pname">${p}</span>
       <span class="hdr-badge ${sub?'yes':'no'}">${sub?'✓ Submitted':'Pending'}</span>
       <span class="hdr-tally">${inCount} IN · ${outCount} OUT</span>
@@ -503,16 +534,26 @@ function renderAvail(){
     const cells = players.map(p=>{
       const mine = p===currentUser;
       const s = getAvailStatus(p, iso);
-      return `<td><span class="av-pill ${s} ${mine?'':'locked'}" data-p="${p}" data-d="${iso}">${pillLabel(s)}</span></td>`;
+      return `<td class="${mine?'mine-cell':''}"><span class="av-pill ${s} ${mine?'':'locked'}" data-p="${p}" data-d="${iso}">${pillLabel(s)}</span></td>`;
     }).join('');
     const n = availCountFor(iso);
-    return `<tr><td class="dcell">${fullDateFmt.format(d)}</td>${cells}<td class="tot-n ${n<4?'low':''}">${n}</td></tr>`;
+    return `<tr><td class="dcell">${dateLabel(d)}</td>${cells}<td class="tot-n ${n<4?'low':''}">${n}</td></tr>`;
   }).join('');
   body.querySelectorAll('.av-pill:not(.locked)').forEach(el=>{
     el.addEventListener('click',()=>{
       const p = el.dataset.p, d = el.dataset.d;
       setAvailStatus(p, d, nextState(getAvailStatus(p,d)));
       renderAvail(); renderSubmitCount(); renderFixtures();
+    });
+  });
+  // Tapping someone else's column used to do nothing at all, which reads as
+  // "the app is broken" — especially on a phone where your own column may be
+  // scrolled off-screen.
+  body.querySelectorAll('.av-pill.locked').forEach(el=>{
+    el.addEventListener('click',()=>{
+      toast(`That's ${el.dataset.p.split(' ')[0]}'s column — you can only change your own (${currentUser ? currentUser.split(' ')[0] : ''})`, 3000);
+      const own = document.querySelector('.av-pill:not(.locked)');
+      if(own) own.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
     });
   });
 }
@@ -805,17 +846,43 @@ function setSyncStatus(state,msg){
   const el = document.getElementById('syncStatus'), lb = document.getElementById('syncLabel');
   el.className = 'sync-status '+state; lb.textContent = msg;
 }
+let syncPending = false;
 function scheduleSync(){
   if(!scriptUrl) return;
+  syncPending = true;
   clearTimeout(syncTimer);
   syncTimer = setTimeout(syncToSheet, 3000);
 }
+// Mobile browsers freeze or kill a backgrounded page, so a pending setTimeout
+// may never run. If the user taps their last Sunday and immediately locks the
+// phone or switches apps, the debounced sync would be lost and their entries
+// would never leave the device. sendBeacon is built for exactly this: the
+// browser guarantees delivery even as the page goes away.
+function flushSync(){
+  if(!scriptUrl || !syncPending) return;
+  clearTimeout(syncTimer);
+  const payload = JSON.stringify({action:'sync', availEntries, fixtureEntries, resultEntries});
+  let sent = false;
+  try{
+    if(navigator.sendBeacon){
+      sent = navigator.sendBeacon(scriptUrl, new Blob([payload], {type:'text/plain;charset=UTF-8'}));
+    }
+  }catch(e){ sent = false; }
+  if(!sent){
+    // Fallback: keepalive lets the request outlive the page too.
+    try{ fetch(scriptUrl, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body:payload, keepalive:true}); }catch(e){}
+  }
+  syncPending = false;
+}
+document.addEventListener('visibilitychange', ()=>{ if(document.visibilityState==='hidden') flushSync(); });
+window.addEventListener('pagehide', flushSync);
 async function syncToSheet(){
   if(!scriptUrl) return;
   setSyncStatus('syncing','Syncing...');
   try{
     const payload = JSON.stringify({action:'sync', availEntries, fixtureEntries, resultEntries});
     await fetch(scriptUrl, {method:'POST', mode:'no-cors', headers:{'Content-Type':'text/plain'}, body:payload});
+    syncPending = false;
     setSyncStatus('synced','Synced');
   }catch(e){ setSyncStatus('error','Sync failed'); }
 }
@@ -888,6 +955,11 @@ document.getElementById('pushBtn').addEventListener('click', ()=>{
 });
 document.getElementById('pullBtn').addEventListener('click', pullFromSheet);
 if(scriptUrl) document.getElementById('scriptUrl').value = scriptUrl;
+
+document.getElementById('jumpMine').addEventListener('click', ()=>{
+  const own = document.getElementById('my-col') || document.querySelector('.av-pill:not(.locked)');
+  if(own) own.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
+});
 
 /* ===== render all + tabs ===== */
 function renderAll(){
