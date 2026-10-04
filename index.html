@@ -167,6 +167,52 @@ table.fx{border-collapse:collapse;width:100%}
 .status-pill{display:inline-block;padding:3px 10px;border-radius:20px;font-size:11px;font-weight:700;font-family:var(--fm)}
 .status-pill.ok{background:var(--green-bg);color:var(--green)}
 .status-pill.short{background:var(--amber-bg);color:var(--amber)}
+.status-pill.none{background:var(--bg2);color:var(--text3)}
+.status-pill.noncomp{background:#E8EEF9;color:var(--info)}
+.fx tbody tr.locked-row td{background:#FFFCF2;border-top:1px solid #e8d9a8;border-bottom:1px solid #e8d9a8}
+.fx tbody tr.locked-row:hover td{background:#FDF8EA}
+.fx tbody tr.locked-row td.fdate{color:var(--navy)}
+.lock-badge{display:inline-block;font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:.8px;color:#8a6d1f;background:#F7ECC9;border:1.5px solid var(--gold);border-radius:20px;padding:2px 8px;margin-left:6px;vertical-align:middle}
+.lock-btn,.unlock-btn{font-size:11px;font-weight:700;font-family:var(--fb);border-radius:20px;padding:4px 12px;cursor:pointer;border:1.5px solid var(--border2);background:var(--surface);color:var(--text2)}
+.lock-btn:hover{background:var(--navy);color:#fff;border-color:var(--navy)}
+.unlock-btn{border-color:var(--gold);color:#8a6d1f;background:#FFFCF2}
+.unlock-btn:hover{background:#F7ECC9}
+.lock-note{font-size:11px;font-family:var(--fm);color:var(--text3)}
+.locked-val{font-family:var(--fb);font-weight:600;color:var(--navy)}
+.tee{font-family:var(--fm);font-size:11px;color:var(--text2);font-weight:600;margin-top:2px}
+.fx-note{font-size:11px;color:var(--text2);font-style:italic;margin-top:3px}
+.conflict-warn{font-size:11px;font-weight:600;color:var(--amber);background:var(--amber-bg);border:1.5px solid #f3d488;border-radius:var(--r);padding:4px 8px;margin-top:5px;line-height:1.4}
+.players-chip.conflict{background:var(--red-bg);border-color:#e6a89f;color:var(--red)}
+.fx tbody tr.noncomp-row td{background:#FAFBFE}
+.fx tbody tr.noncomp-row:hover td{background:#F4F7FC}
+.filter-bar{display:flex;flex-wrap:wrap;gap:10px;align-items:flex-end;background:var(--surface);border:2px solid var(--border);border-radius:var(--r);padding:12px 14px;margin-bottom:14px}
+.filter-bar .f-field select{min-width:130px}
+.filter-count{font-family:var(--fm);font-size:12px;font-weight:700;color:var(--text2);background:var(--bg2);border:1.5px solid var(--border2);border-radius:20px;padding:5px 12px;margin-left:auto;white-space:nowrap}
+.filter-count.filtered{background:var(--amber-bg);border-color:#f3d488;color:var(--amber)}
+.fx tbody tr.no-match td{text-align:center;color:var(--text3);font-style:italic;padding:18px}
+@media(max-width:760px){
+  .filter-bar .f-field{flex:1 1 45%}
+  .filter-bar .f-field select{min-width:0;width:100%}
+  .filter-count{margin-left:0;width:100%;text-align:center}
+}
+.dist-card{background:var(--surface);border:2px solid var(--border);border-radius:var(--rl);padding:16px 18px;margin-bottom:16px}
+.dist-title{font-size:16px;font-weight:700;color:var(--navy);margin-bottom:12px}
+table.dist{border-collapse:collapse;width:100%;min-width:520px}
+.dist thead th{background:var(--navy);color:#fff;font-family:var(--fm);font-size:12px;font-weight:700;padding:8px 6px;text-align:center;white-space:nowrap}
+.dist thead th.dist-lbl{background:var(--navy);text-align:left;min-width:180px}
+.dist thead th.dist-spread-h{background:var(--navy2);font-size:11px;min-width:64px}
+.dist tbody td{padding:9px 6px;text-align:center;border-bottom:1px solid var(--border);font-family:var(--fm);font-size:14px;font-weight:700;color:var(--text2)}
+.dist tbody tr:last-child td{border-bottom:none}
+.dist td.dist-lbl{text-align:left;font-family:var(--fb);font-size:13px;font-weight:700;color:var(--navy);white-space:normal}
+.dist-hint{display:block;font-size:11px;font-weight:400;color:var(--text3);margin-top:1px}
+.dist td.dist-over{background:var(--amber-bg);color:var(--amber);border-radius:4px}
+.dist td.dist-spread{font-size:13px;color:var(--green);background:var(--bg2)}
+.dist td.dist-spread.bad{color:var(--amber)}
+@media(max-width:760px){
+  .dist thead th.dist-lbl{min-width:120px}
+  .dist td.dist-lbl{font-size:12px}
+  .dist-hint{display:none}
+}
 
 table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 .rg thead th{background:var(--navy);color:#fff;font-size:12px;font-weight:700;text-align:center;padding:8px 6px;border-bottom:1px solid var(--navy2)}
@@ -180,6 +226,8 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 .rg tbody td.rg-course{text-align:left;font-family:var(--fb);color:var(--text2)}
 .rg tbody td.rg-empty{color:var(--border2)}
 .rg tbody td.rg-pts{font-weight:700;color:var(--green)}
+.rg tbody tr.rg-noncomp td{background:#FAFBFE;color:var(--text3)}
+.noncomp-tag{display:inline-block;font-family:var(--fm);font-size:9px;font-weight:700;letter-spacing:.5px;color:var(--info);background:#E8EEF9;border-radius:20px;padding:2px 7px;margin-left:6px;vertical-align:middle}
 .rg tfoot td{background:var(--amber-bg);font-family:var(--fm);font-weight:700;color:var(--navy);padding:8px 6px;text-align:center;border-top:2px solid #f3d488;border-right:1px solid #f3d488}
 .rg tfoot tr.rg-tot-lbl td.rg-date{text-align:left;padding-left:14px;font-family:var(--fb)}
 .rg tfoot tr.rg-tot-name td{font-family:var(--fb);font-weight:600;color:var(--text2);font-size:12px;padding-top:4px}
@@ -287,7 +335,41 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 
     <div class="card">
       <h3>Season fixture list</h3>
-      <p>Auto-built from the Availability tab: any Sunday with 4 or more players free becomes a playable round, grouped into Round 1 / Round 2 either side of the New Year. Set the course and who's booking it for each one — changes save straight to the Sheet.</p>
+      <p>Auto-built from the Availability tab. <strong>4 or 5 free</strong> = a comp round scoring 3/2/1/0. <strong>Exactly 3 free</strong> = a non-comp round — still worth playing, just no points. Booking duty is shared out evenly and only ever falls to someone playing that week.</p>
+    </div>
+
+    <div id="booking-tally"></div>
+
+    <div class="filter-bar">
+      <div class="f-field sm">
+        <label>Player</label>
+        <select id="fltPlayer"><option value="">Everyone</option></select>
+      </div>
+      <div class="f-field sm">
+        <label>Round type</label>
+        <select id="fltType">
+          <option value="">All types</option>
+          <option value="comp">Comp only</option>
+          <option value="noncomp">Non-comp only</option>
+          <option value="playable">Comp + non-comp</option>
+          <option value="none">No round</option>
+          <option value="locked">Locked only</option>
+        </select>
+      </div>
+      <div class="f-field sm">
+        <label>Booked by</label>
+        <select id="fltBooker"><option value="">Anyone</option></select>
+      </div>
+      <div class="f-field sm">
+        <label>Involvement</label>
+        <select id="fltRole">
+          <option value="playing">Playing</option>
+          <option value="bye">On bye</option>
+          <option value="either">Playing or bye</option>
+        </select>
+      </div>
+      <button class="btn sm" id="fltClear" type="button">Clear</button>
+      <span class="filter-count" id="fltCount"></span>
     </div>
 
     <div class="grid-wrap" style="overflow-x:visible">
@@ -297,7 +379,7 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
       </table>
     </div>
 
-    <div class="note">Weeks with exactly 5 available are flagged "trim to 4" — whoever's organising picks who sits out.</div>
+    <div class="note">Anything you set yourself on a row stays put and is counted in the booking tally above; everything else rebalances automatically as availability changes.</div>
   </div>
 
   <!-- ============ WINS & LOSSES PANEL ============ -->
@@ -306,11 +388,21 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 
     <div class="card">
       <h3>Season leaderboard</h3>
-      <p style="margin-bottom:14px">3 points for the win, 2 for second, 1 for third, 0 for last — split evenly across a tie. Ranked by total points.</p>
+      <p style="margin-bottom:14px">3 points for the win, 2 for second, 1 for third, 0 for last — split evenly across a tie. Ranked by total points. Non-comp rounds are excluded.</p>
       <table class="lb">
         <thead><tr><th class="lh">Player</th><th>Played</th><th>1st</th><th>2nd</th><th>3rd</th><th>4th</th><th>Points</th></tr></thead>
         <tbody id="leaderboard-body"></tbody>
       </table>
+    </div>
+
+    <div class="card">
+      <h3>Season stats</h3>
+      <p style="margin-bottom:14px">Scoring form across <strong>every</strong> round played — comp and non-comp alike.</p>
+      <table class="lb">
+        <thead><tr><th class="lh">Player</th><th>Rounds</th><th>Comp</th><th>Non-comp</th><th>Best</th><th>Average</th></tr></thead>
+        <tbody id="stats-body"></tbody>
+      </table>
+      <div class="empty" id="stats-empty" style="display:none">No rounds played yet.</div>
     </div>
 
     <div class="card">
@@ -326,7 +418,7 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 
     <div class="card">
       <h3>Round log</h3>
-      <p style="margin-bottom:10px">Same layout as the old spreadsheet — a Score/Points pair per player, blank where they didn't play.</p>
+      <p style="margin-bottom:10px">Same layout as the old spreadsheet — a Score/Points pair per player, blank where they didn't play. Non-comp rounds are listed too, but score no points.</p>
       <div class="grid-wrap"><table class="rg" id="results-grid"></table></div>
       <div class="empty" id="results-empty" style="display:none">No rounds logged yet — once a fixture's played, log the scores above.</div>
     </div>
@@ -381,12 +473,12 @@ table.rg{border-collapse:collapse;width:100%;min-width:1150px}
 /* ===== version ===== */
 // Bump this every time the file changes so you can confirm at a glance
 // which build is actually live after deploying.
-const APP_VERSION = 'v2026.09.13-b';
+const APP_VERSION = 'v2026.09.13-f';
 const APP_BUILT   = '13 September 2026';
 document.getElementById('verPill').textContent = APP_VERSION;
 document.getElementById('verPillLogin').textContent = APP_VERSION;
 document.getElementById('verBig').textContent = APP_VERSION;
-document.getElementById('verBuilt').textContent = 'Built ' + APP_BUILT + ' — includes mobile sync-on-close, own-column highlighting, rotating byes, and server-side merge sync.';
+document.getElementById('verBuilt').textContent = 'Built ' + APP_BUILT + ' — adds lockable fixtures with conflict detection, season stats including non-comp rounds, and fixture filters.';
 document.title = 'Crackerz Golf Tournament ' + APP_VERSION;
 
 const players = ["Harin Wijenayake","Sid Shekar","Mithila Wakista","Sumeet Balgovind","Janik Soysa"];
@@ -576,23 +668,73 @@ function setFixtureOverride(dateIso, patch){
   persist(); scheduleSync();
 }
 
+const ADMIN = 'Mithila Wakista';   // only Mith can unlock a locked fixture
+function isLocked(ovr){ const v = ovr && ovr.locked; return v===true || v==='true' || v==='TRUE' || v===1 || v==='1'; }
+function lockedRoster(ovr){
+  if(!ovr || !ovr.playing) return [];
+  return String(ovr.playing).split(',').map(x=>x.trim()).filter(Boolean);
+}
+function lockFixture(dateIso, f){
+  setFixtureOverride(dateIso, {
+    locked:true, lockedBy:currentUser||'', playing:f.playing.join(', '),
+    byePlayer:f.byePlayer||'', status:f.status, location:f.location, bookedBy:f.bookedBy
+  });
+}
+function unlockFixture(dateIso){
+  setFixtureOverride(dateIso, {locked:false, lockedBy:'', playing:'', byePlayer:'', status:''});
+}
+
 function fixturesData(){
-  let confirmedIdx = 0;
-  // Track byes given out so far this season so the fifth spot rotates fairly
-  // instead of always dropping whoever happens to be last in the players list.
+  let roundIdx = 0;
+  // Byes rotate to whoever has sat out least, so the fifth spot doesn't
+  // always fall on the same person.
   const byesSoFar = {};
-  players.forEach(p=>byesSoFar[p]=0);
-  return sundays.map(d=>{
+  // Booking duty is balanced the same way: each new fixture goes to whoever
+  // among that week's PLAYERS has booked fewest so far. Manual overrides count
+  // toward the tally, so the algorithm compensates for them afterwards.
+  const bookingsSoFar = {};
+  // Also tally how many comp and non-comp rounds each player is scheduled into,
+  // so the whole distribution can be checked at a glance.
+  const compSoFar = {}, nonCompSoFar = {};
+  players.forEach(p=>{ byesSoFar[p]=0; bookingsSoFar[p]=0; compSoFar[p]=0; nonCompSoFar[p]=0; });
+
+  const rows = sundays.map(d=>{
     const iso = localIso(d);
     const availPlayers = players.filter(p=>getAvailStatus(p,iso)==='avail');
     const n = availPlayers.length;
     let status, playing, note='', byePlayer='';
+
+    const ovrEarly = getFixtureOverride(iso);
+    if(isLocked(ovrEarly)){
+      // Locked: use the frozen snapshot, ignore current availability entirely.
+      status    = ovrEarly.status || 'comp';
+      playing   = lockedRoster(ovrEarly);
+      byePlayer = ovrEarly.byePlayer || '';
+      // Anyone locked in who has since marked themselves unavailable.
+      const conflicts = playing.filter(p=>getAvailStatus(p,iso)!=='avail');
+      if(byePlayer) note = byePlayer.split(' ')[0]+' on bye';
+      const location = ovrEarly.location || '';
+      const bookedBy = ovrEarly.bookedBy || '';
+      if(bookedBy) bookingsSoFar[bookedBy] = (bookingsSoFar[bookedBy]||0)+1;
+      if(byePlayer) byesSoFar[byePlayer] = (byesSoFar[byePlayer]||0)+1;
+      playing.forEach(p=>{ if(status==='comp') compSoFar[p]++; else nonCompSoFar[p]++; });
+      roundIdx++;
+      return {date:d, dateIso:iso, status, playing, note, byePlayer, location, bookedBy,
+              locked:true, lockedBy:ovrEarly.lockedBy||'', teeTime:ovrEarly.teeTime||'',
+              fxNote:ovrEarly.note||'', conflicts,
+              roundLabel: d < SEASON_SPLIT ? 'Round 1' : 'Round 2'};
+    }
+
     if(n>=4){
-      status='ok';
+      status='comp';
       if(n>4){
-        // Give the bye to whoever has had the fewest byes so far
-        // (ties broken by fewest, then player order — fully deterministic).
-        byePlayer = availPlayers.slice().sort((a,b)=>
+        // If someone has been manually assigned to book this round, don't hand
+        // them the bye — the booker must be playing, so a bye would silently
+        // discard the choice that was made explicitly.
+        const ovr = getFixtureOverride(iso);
+        const pinnedBooker = (ovr && ovr.bookedBy && availPlayers.includes(ovr.bookedBy)) ? ovr.bookedBy : null;
+        const byeCandidates = availPlayers.filter(p=>p!==pinnedBooker);
+        byePlayer = (byeCandidates.length ? byeCandidates : availPlayers).slice().sort((a,b)=>
           (byesSoFar[a]-byesSoFar[b]) || (players.indexOf(a)-players.indexOf(b))
         )[0];
         byesSoFar[byePlayer]++;
@@ -601,69 +743,240 @@ function fixturesData(){
       } else {
         playing = availPlayers.slice();
       }
+    } else if(n===3){
+      // Three free is still a round — just a social one that doesn't score.
+      status='noncomp';
+      playing = availPlayers.slice();
     } else {
-      status='short';
+      status='none';
       playing = availPlayers;
     }
+
     let location='', bookedBy='';
     const override = getFixtureOverride(iso);
-    if(status==='ok'){
-      location = (override && override.location) || courses[confirmedIdx % courses.length];
-      bookedBy = (override && override.bookedBy && playing.includes(override.bookedBy)) ? override.bookedBy : playing[confirmedIdx % playing.length];
-      confirmedIdx++;
+    const playable = (status==='comp' || status==='noncomp');
+    if(playable){
+      location = (override && override.location) || courses[roundIdx % courses.length];
+      if(override && override.bookedBy && playing.includes(override.bookedBy)){
+        bookedBy = override.bookedBy;
+      } else {
+        // Fewest bookings so far wins; ties broken by player order.
+        bookedBy = playing.slice().sort((a,b)=>
+          (bookingsSoFar[a]-bookingsSoFar[b]) || (players.indexOf(a)-players.indexOf(b))
+        )[0];
+      }
+      if(bookedBy) bookingsSoFar[bookedBy]++;
+      playing.forEach(p=>{ if(status==='comp') compSoFar[p]++; else nonCompSoFar[p]++; });
+      roundIdx++;
     }
+
     const roundLabel = d < SEASON_SPLIT ? 'Round 1' : 'Round 2';
-    return {date:d, dateIso:iso, status, playing, note, byePlayer, location, bookedBy, roundLabel};
+    return {date:d, dateIso:iso, status, playing, note, byePlayer, location, bookedBy, roundLabel,
+            locked:false, lockedBy:'', teeTime:(override&&override.teeTime)||'',
+            fxNote:(override&&override.note)||'', conflicts:[]};
   });
+
+  rows.bookings = bookingsSoFar;
+  rows.byes = byesSoFar;
+  rows.compPlays = compSoFar;
+  rows.nonCompPlays = nonCompSoFar;
+  return rows;
 }
 
 function fxRowHtml(f){
-  if(f.status==='short'){
+  if(f.status==='none' && !f.locked){
     return `<tr class="short">
       <td class="fdate">${fullFmt.format(f.date)}</td>
-      <td><span class="status-pill short">Short (${f.playing.length})</span></td>
+      <td><span class="status-pill none">No round (${f.playing.length})</span></td>
       <td>${f.playing.map(p=>`<span class="players-chip">${p}</span>`).join('') || '<span style="color:var(--text3)">No one confirmed yet</span>'}</td>
       <td>—</td><td>—</td>
     </tr>`;
   }
+  const isComp = f.status==='comp';
+  const pill = isComp
+    ? '<span class="status-pill ok">Comp</span>'
+    : '<span class="status-pill noncomp">Non-comp</span>';
+
+  if(f.locked){
+    const conflictWarn = f.conflicts.length
+      ? `<div class="conflict-warn">⚠ ${f.conflicts.map(p=>p.split(' ')[0]).join(', ')} locked in but since marked unavailable</div>`
+      : '';
+    const canUnlock = currentUser === ADMIN;
+    const unlockBtn = canUnlock
+      ? `<button type="button" class="unlock-btn" data-date="${f.dateIso}">Unlock</button>`
+      : `<span class="lock-note">Locked by ${(f.lockedBy||'—').split(' ')[0]}</span>`;
+    return `<tr class="locked-row ${isComp?'':'noncomp-row'}">
+      <td class="fdate">🔒 ${fullFmt.format(f.date)}
+        ${f.teeTime?`<div class="tee">${f.teeTime}</div>`:''}</td>
+      <td>${pill}<span class="lock-badge">LOCKED</span>
+        ${f.note?`<div class="note" style="margin-top:3px">${f.note}</div>`:''}
+        ${f.fxNote?`<div class="fx-note">${f.fxNote}</div>`:''}
+        ${conflictWarn}
+        <div style="margin-top:5px">${unlockBtn}</div></td>
+      <td>${f.playing.map(p=>`<span class="players-chip ${f.conflicts.includes(p)?'conflict':''}">${p}</span>`).join('')}</td>
+      <td class="locked-val">${f.location||'—'}</td>
+      <td class="locked-val">${f.bookedBy||'—'}</td>
+    </tr>`;
+  }
+
   const locOpts = courses.map(c=>`<option ${c===f.location?'selected':''}>${c}</option>`).join('');
   const bookOpts = f.playing.map(p=>`<option ${p===f.bookedBy?'selected':''}>${p}</option>`).join('');
-  return `<tr>
+  const sub = isComp
+    ? (f.note?`<div class="note" style="margin-top:3px">${f.note}</div>`:'')
+    : '<div class="note" style="margin-top:3px">3 playing — social, no points</div>';
+  return `<tr class="${isComp?'':'noncomp-row'}">
     <td class="fdate">${fullFmt.format(f.date)}</td>
-    <td><span class="status-pill ok">Confirmed</span>${f.note?`<div class="note" style="margin-top:3px">${f.note}</div>`:''}</td>
+    <td>${pill}${sub}
+      <div style="margin-top:5px"><button type="button" class="lock-btn" data-date="${f.dateIso}">Lock in</button></div></td>
     <td>${f.playing.map(p=>`<span class="players-chip">${p}</span>`).join('')}</td>
     <td><select class="inline-sel loc-sel" data-date="${f.dateIso}">${locOpts}</select></td>
     <td><select class="inline-sel book-sel" data-date="${f.dateIso}">${bookOpts}</select></td>
   </tr>`;
 }
 
+function getFilters(){
+  return {
+    player: (document.getElementById('fltPlayer')||{}).value || '',
+    type:   (document.getElementById('fltType')||{}).value   || '',
+    booker: (document.getElementById('fltBooker')||{}).value || '',
+    role:   (document.getElementById('fltRole')||{}).value   || 'playing'
+  };
+}
+function fixtureMatches(f, flt){
+  if(flt.type==='comp'     && f.status!=='comp') return false;
+  if(flt.type==='noncomp'  && f.status!=='noncomp') return false;
+  if(flt.type==='none'     && f.status!=='none') return false;
+  if(flt.type==='playable' && f.status==='none') return false;
+  if(flt.type==='locked'   && !f.locked) return false;
+  if(flt.booker && f.bookedBy !== flt.booker) return false;
+  if(flt.player){
+    const isPlaying = f.playing.includes(flt.player);
+    const isBye = f.byePlayer === flt.player;
+    if(flt.role==='playing' && !isPlaying) return false;
+    if(flt.role==='bye'     && !isBye) return false;
+    if(flt.role==='either'  && !isPlaying && !isBye) return false;
+  }
+  return true;
+}
+
 function renderFixtures(){
   const fx = fixturesData();
-  const confirmed = fx.filter(f=>f.status==='ok');
+  const comp    = fx.filter(f=>f.status==='comp');
+  const noncomp = fx.filter(f=>f.status==='noncomp');
   const round1 = fx.filter(f=>f.roundLabel==='Round 1');
   const round2 = fx.filter(f=>f.roundLabel==='Round 2');
-  const r1ok = round1.filter(f=>f.status==='ok').length;
-  const r2ok = round2.filter(f=>f.status==='ok').length;
+  const r1c = round1.filter(f=>f.status==='comp').length;
+  const r1n = round1.filter(f=>f.status==='noncomp').length;
+  const r2c = round2.filter(f=>f.status==='comp').length;
+  const r2n = round2.filter(f=>f.status==='noncomp').length;
 
   document.getElementById('fixture-metrics').innerHTML = `
-    <div class="metric"><div class="ml">Sundays in range</div><div class="mv">${fx.length}</div><div class="ms">${fullFmt.format(sundays[0])} → ${fullFmt.format(sundays[sundays.length-1])}</div></div>
-    <div class="metric"><div class="ml">Likely rounds</div><div class="mv">${confirmed.length}</div><div class="ms">4+ players free</div></div>
-    <div class="metric"><div class="ml">Round 1</div><div class="mv">${r1ok}<span style="font-size:14px;color:var(--text3)">/${round1.length}</span></div><div class="ms">${fullFmt.format(round1[0].date)} – ${fullFmt.format(round1[round1.length-1].date)}</div></div>
-    <div class="metric"><div class="ml">Round 2</div><div class="mv">${r2ok}<span style="font-size:14px;color:var(--text3)">/${round2.length}</span></div><div class="ms">${fullFmt.format(round2[0].date)} – ${fullFmt.format(round2[round2.length-1].date)}</div></div>
+    <div class="metric"><div class="ml">Comp rounds</div><div class="mv">${comp.length}</div><div class="ms">4+ players free</div></div>
+    <div class="metric"><div class="ml">Non-comp rounds</div><div class="mv">${noncomp.length}</div><div class="ms">3 free — social, no points</div></div>
+    <div class="metric"><div class="ml">Round 1</div><div class="mv">${r1c}<span style="font-size:14px;color:var(--text3)"> +${r1n}</span></div><div class="ms">comp + non-comp, to ${fullFmt.format(round1[round1.length-1].date)}</div></div>
+    <div class="metric"><div class="ml">Round 2</div><div class="mv">${r2c}<span style="font-size:14px;color:var(--text3)"> +${r2n}</span></div><div class="ms">comp + non-comp, from ${fullFmt.format(round2[0].date)}</div></div>
   `;
 
-  document.getElementById('fixture-body').innerHTML =
-    `<tr class="round-hdr"><td colspan="5">Round 1 — ${fullFmt.format(round1[0].date)} to ${fullFmt.format(round1[round1.length-1].date)} (${r1ok} likely rounds)</td></tr>${round1.map(fxRowHtml).join('')}` +
-    `<tr class="round-hdr"><td colspan="5">Round 2 — ${fullFmt.format(round2[0].date)} to ${fullFmt.format(round2[round2.length-1].date)} (${r2ok} likely rounds)</td></tr>${round2.map(fxRowHtml).join('')}`;
+  // Season distribution — comp rounds, non-comp rounds, byes and booking duty
+  // per player, so uneven allocation is obvious before the season runs away.
+  const bk = fx.bookings||{}, by = fx.byes||{}, cp = fx.compPlays||{}, ncp = fx.nonCompPlays||{};
+  const spreadOf = obj => {
+    const v = players.map(p=>obj[p]||0);
+    return Math.max(...v) - Math.min(...v);
+  };
+  const compSpread = spreadOf(cp), bookSpread = spreadOf(bk), byeSpread = spreadOf(by);
+  const cell = (obj,p,spread) => {
+    const v = obj[p]||0;
+    const lo = Math.min(...players.map(q=>obj[q]||0));
+    const flag = (spread>=2 && (v-lo)>=2) ? ' class="dist-over"' : '';
+    return `<td${flag}>${v}</td>`;
+  };
+  const distRows = [
+    ['Comp rounds', cp, compSpread, 'Rounds that score points'],
+    ['Non-comp rounds', ncp, spreadOf(ncp), '3-player social rounds'],
+    ['Byes', by, byeSpread, 'Sundays sitting out when 5 are free'],
+    ['Booking duty', bk, bookSpread, 'Rounds they organise']
+  ].map(([label,obj,spread,hint])=>
+    `<tr><td class="dist-lbl">${label}<span class="dist-hint">${hint}</span></td>${players.map(p=>cell(obj,p,spread)).join('')}<td class="dist-spread ${spread>=2?'bad':''}">${spread}</td></tr>`
+  ).join('');
 
+  const warnings = [];
+  if(compSpread>=2) warnings.push(`comp rounds vary by ${compSpread}`);
+  if(bookSpread>=2) warnings.push(`booking duty varies by ${bookSpread}`);
+  if(byeSpread>=2)  warnings.push(`byes vary by ${byeSpread}`);
+  const warn = warnings.length
+    ? `<div class="note" style="margin-top:8px;color:var(--amber)">Uneven: ${warnings.join('; ')}. Bookings rebalance automatically — for rounds and byes, the cause is usually differing availability.</div>`
+    : `<div class="note" style="margin-top:8px;color:var(--green)">Evenly distributed — every measure is within 1 across all players.</div>`;
+
+  document.getElementById('booking-tally').innerHTML = `
+    <div class="dist-card">
+      <div class="dist-title">Season distribution</div>
+      <div style="overflow-x:auto">
+      <table class="dist">
+        <thead><tr><th class="dist-lbl"></th>${players.map(p=>`<th>${p.split(' ')[0]}</th>`).join('')}<th class="dist-spread-h">Spread</th></tr></thead>
+        <tbody>${distRows}</tbody>
+      </table>
+      </div>
+      ${warn}
+    </div>`;
+
+  // Filters affect ONLY which rows are listed. The distribution table above and
+  // all fixture assignment above stay calculated across the whole season.
+  const flt = getFilters();
+  const isFiltered = !!(flt.player || flt.type || flt.booker);
+  const v1 = round1.filter(f=>fixtureMatches(f,flt));
+  const v2 = round2.filter(f=>fixtureMatches(f,flt));
+
+  const byLockedFirst = (a,b) => (b.locked?1:0)-(a.locked?1:0);
+  const section = (label, all, vis) => {
+    if(!vis.length) return '';
+    const c = vis.filter(f=>f.status==='comp').length;
+    const n = vis.filter(f=>f.status==='noncomp').length;
+    const shown = isFiltered ? ` — showing ${vis.length} of ${all.length}` : '';
+    const lockedCount = vis.filter(f=>f.locked).length;
+    const lockTxt = lockedCount?` · ${lockedCount} locked`:'';
+    return `<tr class="round-hdr"><td colspan="5">${label} (${c} comp, ${n} non-comp${lockTxt})${shown}</td></tr>${vis.slice().sort(byLockedFirst).map(fxRowHtml).join('')}`;
+  };
+
+  const body =
+    section(`Round 1 — ${fullFmt.format(round1[0].date)} to ${fullFmt.format(round1[round1.length-1].date)}`, round1, v1) +
+    section(`Round 2 — ${fullFmt.format(round2[0].date)} to ${fullFmt.format(round2[round2.length-1].date)}`, round2, v2);
+
+  document.getElementById('fixture-body').innerHTML = body ||
+    '<tr class="no-match"><td colspan="5">No fixtures match these filters.</td></tr>';
+
+  const totalVis = v1.length + v2.length;
+  const countEl = document.getElementById('fltCount');
+  countEl.textContent = isFiltered
+    ? `${totalVis} of ${fx.length} Sundays`
+    : `${fx.length} Sundays`;
+  countEl.classList.toggle('filtered', isFiltered);
+
+  document.querySelectorAll('.lock-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      const f = fixturesData().find(x=>x.dateIso===btn.dataset.date);
+      if(!f) return;
+      if(!confirm(`Lock in ${fullFmt.format(f.date)}?\n\n${f.playing.map(p=>p.split(' ')[0]).join(', ')} at ${f.location}, booked by ${(f.bookedBy||'').split(' ')[0]}.\n\nThis freezes the round. Only ${ADMIN.split(' ')[0]} can unlock it.`)) return;
+      lockFixture(btn.dataset.date, f);
+      toast('Round locked in'); renderFixtures();
+    });
+  });
+  document.querySelectorAll('.unlock-btn').forEach(btn=>{
+    btn.addEventListener('click',()=>{
+      if(currentUser !== ADMIN){ toast('Only '+ADMIN.split(' ')[0]+' can unlock a round', 3000); return; }
+      if(!confirm('Unlock this round? It will go back to being calculated from availability.')) return;
+      unlockFixture(btn.dataset.date);
+      toast('Round unlocked'); renderFixtures();
+    });
+  });
   document.querySelectorAll('.loc-sel').forEach(sel=>{
-    sel.addEventListener('change',()=>{ setFixtureOverride(sel.dataset.date, {location: sel.value}); toast('Location saved'); });
+    sel.addEventListener('change',()=>{ setFixtureOverride(sel.dataset.date, {location: sel.value}); toast('Location saved'); renderFixtures(); });
   });
   document.querySelectorAll('.book-sel').forEach(sel=>{
-    sel.addEventListener('change',()=>{ setFixtureOverride(sel.dataset.date, {bookedBy: sel.value}); toast('Booking saved'); });
+    sel.addEventListener('change',()=>{ setFixtureOverride(sel.dataset.date, {bookedBy: sel.value}); toast('Booking saved'); renderFixtures(); });
   });
 
-  populateFixturePicker(confirmed);
+  populateFixturePicker(comp.concat(noncomp).sort((a,b)=>a.dateIso<b.dateIso?-1:1));
 }
 
 /* ===== results ===== */
@@ -688,18 +1001,20 @@ function roundsFromEntries(){
     // a NaN here would silently sort to the front and "win" the round.
     if(!Number.isFinite(v)) return;
     if(!players.includes(e.player)) return;
-    if(!byDate[e.date]) byDate[e.date] = {date:e.date, course:e.course, scores:{}};
+    if(!byDate[e.date]) byDate[e.date] = {date:e.date, course:e.course, scores:{}, comp:true};
     byDate[e.date].scores[e.player] = v;
     if(e.course) byDate[e.date].course = e.course;
+    // Rows saved before non-comp existed have no `comp` value — treat as comp.
+    if(e.comp !== undefined && e.comp !== '') byDate[e.date].comp = !(e.comp===false || e.comp==='false' || e.comp===0 || e.comp==='FALSE');
   });
   return Object.values(byDate)
     .filter(r=>Object.keys(r.scores).length > 0)
     .sort((a,b)=> a.date < b.date ? -1 : 1);
 }
-function saveRoundScores(dateIso, course, scores){
+function saveRoundScores(dateIso, course, scores, isComp){
   resultEntries = resultEntries.filter(e=>e.date!==dateIso);
   Object.entries(scores).forEach(([player,score])=>{
-    resultEntries.push({date:dateIso, course, player, score, ts:Date.now()});
+    resultEntries.push({date:dateIso, course, player, score, comp:(isComp!==false), ts:Date.now()});
   });
   persist(); scheduleSync();
 }
@@ -708,6 +1023,7 @@ function computeStats(){
   const stats = {};
   players.forEach(p=>stats[p]={played:0,p1:0,p2:0,p3:0,p4:0,pts:0});
   roundsFromEntries().forEach(r=>{
+    if(r.comp === false) return;   // non-comp rounds are social only
     const pts = scoreToPoints(r.scores);
     const ranked = Object.entries(r.scores).sort((a,b)=>a[1]-b[1]);
     // Standard competition ranking: tied players share the higher position
@@ -757,12 +1073,16 @@ function renderResultsGrid(){
   const r2 = '<tr class="rg-r2">' + players.map(()=>'<th>Score</th><th class="rg-gap">Points</th>').join('') + '</tr>';
 
   const body = rounds.map(r=>{
+    const isNon = r.comp === false;
     const pts = scoreToPoints(r.scores);
     const cells = players.map(p=>{
       if(r.scores[p]===undefined) return '<td class="rg-empty">—</td><td class="rg-empty">—</td>';
-      return `<td>${r.scores[p]}</td><td class="rg-pts">${pts[p].toFixed(2)}</td>`;
+      // Non-comp rounds still show strokes, but award no points.
+      const ptCell = isNon ? '<td class="rg-empty">—</td>' : `<td class="rg-pts">${pts[p].toFixed(2)}</td>`;
+      return `<td>${r.scores[p]}</td>${ptCell}`;
     }).join('');
-    return `<tr><td class="rg-date">${fullFmt.format(parseIso(r.date))}</td><td class="rg-course">${r.course||''}</td>${cells}</tr>`;
+    const tag = isNon ? ' <span class="noncomp-tag">NON-COMP</span>' : '';
+    return `<tr class="${isNon?'rg-noncomp':''}"><td class="rg-date">${fullFmt.format(parseIso(r.date))}</td><td class="rg-course">${r.course||''}${tag}</td>${cells}</tr>`;
   }).join('');
 
   const totLbl = '<tr class="rg-tot-lbl"><td class="rg-date">Total Points</td><td></td>' +
@@ -771,6 +1091,40 @@ function renderResultsGrid(){
     players.map(p=>`<td colspan="2">${p}</td>`).join('') + '</tr>';
 
   t.innerHTML = `<thead>${r1}${r2}</thead><tbody>${body}</tbody><tfoot>${totLbl}${totName}</tfoot>`;
+}
+
+function computeSeasonStats(){
+  // Unlike the leaderboard, this counts non-comp rounds too — it's about
+  // scoring form, not championship points.
+  const st={};
+  players.forEach(p=>st[p]={rounds:0,comp:0,non:0,best:null,total:0});
+  roundsFromEntries().forEach(r=>{
+    const isNon = r.comp===false;
+    Object.entries(r.scores).forEach(([name,sc])=>{
+      if(!st[name]) return;
+      st[name].rounds++; st[name].total += sc;
+      if(isNon) st[name].non++; else st[name].comp++;
+      if(st[name].best===null || sc < st[name].best) st[name].best = sc;
+    });
+  });
+  return st;
+}
+function renderSeasonStats(){
+  const st=computeSeasonStats();
+  const any=players.some(p=>st[p].rounds>0);
+  document.getElementById('stats-empty').style.display = any?'none':'block';
+  if(!any){ document.getElementById('stats-body').innerHTML=''; return; }
+  const ranked=players.slice().sort((a,b)=>{
+    if(st[a].rounds===0) return 1;
+    if(st[b].rounds===0) return -1;
+    return (st[a].total/st[a].rounds)-(st[b].total/st[b].rounds);
+  });
+  document.getElementById('stats-body').innerHTML=ranked.map(p=>{
+    const s=st[p];
+    if(!s.rounds) return `<tr><td class="lname">${p}</td><td>0</td><td>0</td><td>0</td><td>—</td><td>—</td></tr>`;
+    return `<tr><td class="lname">${p}</td><td>${s.rounds}</td><td>${s.comp}</td><td>${s.non}</td>`
+      +`<td class="pts">${s.best}</td><td>${(s.total/s.rounds).toFixed(1)}</td></tr>`;
+  }).join('');
 }
 
 function renderResultsMetrics(){
@@ -788,9 +1142,9 @@ function renderResultsMetrics(){
 
 function populateFixturePicker(confirmedFixtures){
   const picker = document.getElementById('fixture-picker');
-  if(!confirmedFixtures.length){ picker.innerHTML = '<option value="">No confirmed fixtures yet</option>'; document.getElementById('score-entry-rows').innerHTML=''; return; }
+  if(!confirmedFixtures.length){ picker.innerHTML = '<option value="">No playable fixtures yet</option>'; document.getElementById('score-entry-rows').innerHTML=''; return; }
   picker.innerHTML = confirmedFixtures.map(f=>
-    `<option value='${JSON.stringify({playing:f.playing, location:f.location, dateIso:f.dateIso})}'>${fullFmt.format(f.date)} — ${f.location}</option>`
+    `<option value='${JSON.stringify({playing:f.playing, location:f.location, dateIso:f.dateIso, comp:f.status==='comp'})}'>${fullFmt.format(f.date)} — ${f.location}${f.status==='noncomp'?' (non-comp)':''}</option>`
   ).join('');
   renderScoreRows();
   picker.onchange = renderScoreRows;
@@ -811,7 +1165,7 @@ const MIN_SCORE = 30, MAX_SCORE = 200;
 document.getElementById('save-scores-btn').addEventListener('click', ()=>{
   const picker = document.getElementById('fixture-picker');
   if(!picker.value){ toast('No fixture selected'); return; }
-  const {location, dateIso} = JSON.parse(picker.value);
+  const {location, dateIso, comp} = JSON.parse(picker.value);
   const inputs = document.querySelectorAll('.score-input');
   const scores = {};
   const bad = [];
@@ -836,8 +1190,8 @@ document.getElementById('save-scores-btn').addEventListener('click', ()=>{
   if(blank){
     if(!confirm(`Only ${n} score${n===1?'':'s'} entered — save this round with ${n} player${n===1?'':'s'}?`)) return;
   }
-  saveRoundScores(dateIso, location, scores);
-  toast('Scores saved');
+  saveRoundScores(dateIso, location, scores, comp);
+  toast(comp===false ? 'Non-comp scores saved (no points awarded)' : 'Scores saved');
   renderAll();
 });
 
@@ -961,11 +1315,29 @@ document.getElementById('jumpMine').addEventListener('click', ()=>{
   if(own) own.scrollIntoView({behavior:'smooth', block:'nearest', inline:'center'});
 });
 
+/* ===== fixture filters ===== */
+(function initFilters(){
+  const opts = '<option value="">Everyone</option>' + players.map(p=>`<option value="${p}">${p}</option>`).join('');
+  document.getElementById('fltPlayer').innerHTML = opts;
+  document.getElementById('fltBooker').innerHTML =
+    '<option value="">Anyone</option>' + players.map(p=>`<option value="${p}">${p}</option>`).join('');
+  ['fltPlayer','fltType','fltBooker','fltRole'].forEach(id=>{
+    document.getElementById(id).addEventListener('change', renderFixtures);
+  });
+  document.getElementById('fltClear').addEventListener('click', ()=>{
+    document.getElementById('fltPlayer').value='';
+    document.getElementById('fltType').value='';
+    document.getElementById('fltBooker').value='';
+    document.getElementById('fltRole').value='playing';
+    renderFixtures();
+  });
+})();
+
 /* ===== render all + tabs ===== */
 function renderAll(){
   renderAvail(); renderSubmitCount();
   renderFixtures();
-  renderResultsMetrics(); renderResultsGrid();
+  renderResultsMetrics(); renderSeasonStats(); renderResultsGrid();
 }
 document.querySelectorAll('.tab-btn').forEach(btn=>{
   btn.addEventListener('click',()=>{
